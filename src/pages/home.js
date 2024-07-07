@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, Image, Button, ScrollView } from "react-native";
 import pythonImage from '../../assets/images/Python.jpg';
 import cppImage from '../../assets/images/Cpp.png';
+import JsImage from '../../assets/images/Js.png';
 
 function HomePage() {
   return (
@@ -15,6 +16,12 @@ function HomePage() {
       <View style={styles.section}>
         <Image source={cppImage} style={styles.image} resizeMode="contain" />
         <Text style={styles.heading}>C++</Text>
+        <Text style={styles.subheading}>A subheading for this section, as long or as short as you like</Text>
+        <Button title="Learn More" onPress={() => {}} />
+      </View>
+      <View style={styles.section}>
+        <Image source={JsImage} style={styles.image} resizeMode="contain" />
+        <Text style={styles.heading}>Js</Text>
         <Text style={styles.subheading}>A subheading for this section, as long or as short as you like</Text>
         <Button title="Learn More" onPress={() => {}} />
       </View>
