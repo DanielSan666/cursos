@@ -1,20 +1,10 @@
 import React from 'react';
-import { View, Text, } from 'react-native';
-import { createDrawerNavigator } from '@react-navigation/drawer';
-import home from './home'
-import ProfilePage from './profile';
-import SettingsPage from './settings';
-
-const Drawer = createDrawerNavigator();
+import {  Text  } from "react-native";
 
 function MenuPage() {
   return (
-    <Drawer.Navigator initialRouteName="Menu">
-      <Drawer.Screen name="Home" component={home} />
-      <Drawer.Screen name="Profile" component={ProfilePage} />
-      <Drawer.Screen name="Settings" component={SettingsPage} />
-    </Drawer.Navigator>
-  );
+<Text style={styles.title}>Welcome to the Home Screen</Text>
+  )    
 }
 
 export default MenuPage;

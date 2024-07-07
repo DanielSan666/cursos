@@ -1,92 +1,70 @@
-import { useEffect } from "react";
-import { useAuth } from "../context/authContext";
-import { Link, useNavigate } from "react-router-dom";
-import { Card, Message, Button, Input, Label } from "../components/ui";
-import { useForm } from "react-hook-form";
-import { registerSchema } from "../schemas/auth";
-import { zodResolver } from "@hookform/resolvers/zod";
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import axios from 'axios';
 
-function Register() {
-  const { signup, errors: registerErrors, isAuthenticated } = useAuth();
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
-    resolver: zodResolver(registerSchema),
-  });
-  const navigate = useNavigate();
+function RegisterPage({ navigation }) {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
-  const onSubmit = async (value) => {
-    await signup(value);
+  const handleRegister = async () => {
+    try {
+      const response = await axios.post('http://localhost:5000/api/register', {
+        username,
+        email,
+        password,
+      });
+
+      if (response.status === 200) {
+        // Navigate to login or home page after successful registration
+        navigation.navigate('Login');
+      }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  useEffect(() => {
-    if (isAuthenticated) navigate("/tasks");
-  }, [isAuthenticated]);
-
   return (
-    <div className="h-[calc(100vh-100px)] flex items-center justify-center">
-      <Card>
-        {registerErrors.map((error, i) => (
-          <Message message={error} key={i} />
-        ))}
-        <h1 className="text-3xl font-bold">Register</h1>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Label htmlFor="username">Username:</Label>
-          <Input
-            type="text"
-            name="username"
-            placeholder="Write your name"
-            {...register("username")}
-            autoFocus
-          />
-          {errors.username?.message && (
-            <p className="text-red-500">{errors.username?.message}</p>
-          )}
-
-          <Label htmlFor="email">Email:</Label>
-          <Input
-            name="email"
-            placeholder="youremail@domain.tld"
-            {...register("email")}
-          />
-          {errors.email?.message && (
-            <p className="text-red-500">{errors.email?.message}</p>
-          )}
-
-          <Label htmlFor="password">Password:</Label>
-          <Input
-            type="password"
-            name="password"
-            placeholder="********"
-            {...register("password")}
-          />
-          {errors.password?.message && (
-            <p className="text-red-500">{errors.password?.message}</p>
-          )}
-
-          <Label htmlFor="confirmPassword">Confirm Password:</Label>
-          <Input
-            type="password"
-            name="confirmPassword"
-            placeholder="********"
-            {...register("confirmPassword")}
-          />
-          {errors.confirmPassword?.message && (
-            <p className="text-red-500">{errors.confirmPassword?.message}</p>
-          )}
-          <Button>Submit</Button>
-        </form>
-        <p>
-          Already Have an Account?
-          <Link className="text-sky-500" to="/login">
-            Login
-          </Link>
-        </p>
-      </Card>
-    </div>
+    <View style={styles.container}>
+      <Text>Welcome to the Register Screen</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Username"
+        value={username}
+        onChangeText={setUsername}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        value={password}
+        secureTextEntry
+        onChangeText={setPassword}
+      />
+      <Button title="Register" onPress={handleRegister} color="#6200ee" />
+      <Button title="Login" onPress={() => navigation.navigate('Login')} color="#6200ee" />
+    </View>
   );
 }
 
-export default Register;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: 16,
+  },
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 12,
+    paddingHorizontal: 8,
+  },
+});
+
+export default RegisterPage;

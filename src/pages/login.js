@@ -11,10 +11,14 @@ const Login = ({ navigation }) => {
       const response = await axios.post("http://localhost:5000/api/login", {
         email,
         password,
-      });
+      },
+      {
+        withCredentials: true // Asegúrate de que las credenciales se envíen con la solicitud
+      }
+    );
 
       console.log(response.data); // Puedes mostrar esto en un mensaje o redirigir a otra pantalla
-      navigation.navigate("Menu"); // Redirige a la pantalla de inicio después del login
+      navigation.navigate("Home"); // Redirige a la pantalla de inicio después del login
     } catch (error) {
       console.error("Error de login:", error);
       // Aquí podrías mostrar un mensaje de error al usuario
