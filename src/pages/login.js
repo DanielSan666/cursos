@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { View, Text, Button, TextInput, StyleSheet } from "react-native";
+import { View, Text, Button, TextInput, StyleSheet, TouchableOpacity } from "react-native";
 import axios from "axios";
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
 const Login = ({ navigation }) => {
   const [email, setEmail] = useState("");
@@ -13,20 +14,22 @@ const Login = ({ navigation }) => {
         password,
       },
       {
-        withCredentials: true // Asegúrate de que las credenciales se envíen con la solicitud
-      }
-    );
+        withCredentials: true // Ensure credentials are sent with the request
+      });
 
-      console.log(response.data); // Puedes mostrar esto en un mensaje o redirigir a otra pantalla
-      navigation.navigate("Home"); // Redirige a la pantalla de inicio después del login
+      console.log(response.data); // You can show this in a message or redirect to another screen
+      navigation.navigate("Home"); // Redirect to the home screen after login
     } catch (error) {
-      console.error("Error de login:", error);
-      // Aquí podrías mostrar un mensaje de error al usuario
+      console.error("Login error:", error);
+      // Here you could show an error message to the user
     }
   };
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+        <Ionicons name="arrow-back" size={24} color="#6200ee" />
+      </TouchableOpacity>
       <View style={styles.card}>
         <Text style={styles.title}>Login</Text>
         <TextInput
@@ -58,9 +61,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#f0f0f0",
+    paddingTop: 50, // Add some padding to the top to avoid overlap with the back button
+  },
+  backButton: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+    zIndex: 1,
   },
   card: {
-    width: "50%",
+    width: "80%",
     padding: 15,
     borderRadius: 15,
     backgroundColor: "#ffffff",

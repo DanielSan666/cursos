@@ -11,7 +11,7 @@ const LogoutButton = ({ navigation }) => {
 
       if (response.ok) {
         // Logout exitoso, redirige al usuario a la pantalla de login
-        navigation.navigate('Login');
+        navigation.navigate('Information');
       } else {
         // Error en el logout
         Alert.alert('Error', 'No se pudo cerrar sesión.');

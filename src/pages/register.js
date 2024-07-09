@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text, TextInput, Button, StyleSheet, TouchableOpacity } from 'react-native';
 import axios from 'axios';
+import Ionicons from 'react-native-vector-icons/Ionicons';
+
 
 function RegisterPage({ navigation }) {
   const [username, setUsername] = useState('');
@@ -26,6 +28,9 @@ function RegisterPage({ navigation }) {
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+        <Ionicons name="arrow-back" size={24} color="#6200ee" />
+      </TouchableOpacity>
       <Text>Welcome to the Register Screen</Text>
       <TextInput
         style={styles.input}
